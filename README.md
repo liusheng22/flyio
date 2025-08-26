@@ -6,9 +6,13 @@
 [![size](https://img.shields.io/github/size/liusheng22/flyio/dist/fly.min.js.svg)](https://unpkg.com/flyio.js@1.0.0/dist/fly.min.js)
 ![platform](https://img.shields.io/badge/platforms-All%20JavaScript%20Runtimes-blue.svg)
 
-## Fly.js
+## Flyio.js
 
 一个支持所有JavaScript运行环境的基于Promise的、支持请求转发、强大的http请求库。可以让您在多个端上(Node.js、浏览器、小程序等)尽可能大限度的实现代码复用。
+
+
+### ✨ 新特性
+> **🚀 DELETE请求**: 新增 `deleteWithBody` 参数支持，让 DELETE 请求更加灵活！[查看详情](#delete-请求的特殊处理)
 
 
 ### 浏览器支持
@@ -557,7 +561,9 @@ request 适合在 [RESTful API](http://en.wikipedia.org/wiki/Representational_st
 
 `fly.patch(url,data,options)`
 
-### DELETE 请求的特殊处理
+### 🆕 DELETE 请求的特殊处理
+
+> **✨ 新特性**: `deleteWithBody` 参数让 DELETE 请求更加灵活！
 
 Fly.js 对 DELETE 请求进行了特殊处理，默认情况下会遵循 HTTP 标准，将数据作为查询参数发送：
 
@@ -566,14 +572,14 @@ Fly.js 对 DELETE 请求进行了特殊处理，默认情况下会遵循 HTTP �
 fly.delete('/api/user/123', {reason: 'spam'})
 // 生成：DELETE /api/user/123?reason=spam
 
-// 启用请求体：设置 deleteWithBody: true
+// 🆕 新特性：启用请求体，设置 deleteWithBody: true
 fly.delete('/api/user/123', {reason: 'spam'}, {deleteWithBody: true})
 // 生成：DELETE /api/user/123 with body: {"reason": "spam"}
 ```
 
 **参数说明：**
 - `deleteWithBody: false`（默认）：DELETE 请求使用查询参数，数据会被添加到 URL 中
-- `deleteWithBody: true`：DELETE 请求使用请求体，数据会作为 JSON 发送
+- `deleteWithBody: true`（🆕 新特性）：DELETE 请求使用请求体 body(payload)，数据会作为 JSON 发送
 
 **使用建议：**
 - 推荐使用默认行为（查询参数），符合 HTTP 标准且兼容性更好

@@ -1,17 +1,18 @@
 # Changelog
 
-### **v0.6.1** (Sep 6, 2018)
+### **v1.0.0** (Current)
 
-+ 添加“params”配置项：
- - 可以设置公共的的get参数：fly.config.params={token:"xxxx"}
- - 非Get请求也可以设置Url params
- - Get请求的话会合并data和“params”
++ 🆕 **新特性**: 新增 `deleteWithBody` 参数支持
+  - DELETE 请求现在可以选择使用请求体或查询参数
+  - 默认行为遵循 HTTP 标准（使用查询参数）
+  - 设置 `deleteWithBody: true` 可启用请求体支持
+  - 解决了原本的`fly`使用 DELETE 请求无法传递`body(payload)`的问题
 
-- 在非浏览器环境下，响应头中有多个"set-cookie"字段时，headers["set-cookie"]值为数组类型(之前为字符串)
++ 🐛 **Bug 修复**: 修复了 DELETE 请求的数据处理逻辑
+  - 修复了 DELETE 请求时 data 被强制转为 query 参数的问题
+  - 改进了参数合并逻辑，避免数据丢失
 
-### **v0.5.4** (Apr 20, 2018)
-
-+ Adding `lock/unlock` API for interceptors and fly propotype.
-+ update typings file for typescript
-+ delete ~~`await`~~ that added in v0.5.2.
++ ✨ **改进**: 优化了多端兼容性
+  - 更好的 HTTP 标准遵循
+  - 保持了向后兼容性
 

@@ -4,9 +4,12 @@
 [![size](https://img.shields.io/github/size/liusheng22/flyio/dist/fly.min.js.svg)](https://unpkg.com/flyio.js@1.0.0/dist/fly.min.js)
 ![platform](https://img.shields.io/badge/platforms-All%20JavaScript%20Runtimes-blue.svg)
 
-## Fly.js
+## Flyio.js
 
 Supporting request forwarding and Promise based HTTP client for all JavaScript runtimes.
+
+### ✨ New Features
+> **🚀 DELETE Request**: New `deleteWithBody` parameter support for more flexible DELETE requests! [View Details](#special-handling-for-delete-requests)
 
 Chinese documentation : [中文文档](https://github.com/liusheng22/flyio/blob/main/README.md)
 
@@ -546,7 +549,9 @@ This API is suitable for use in RESTful API scenarios. For convenience, the corr
 
 `fly.patch(url,data,options)`
 
-### Special Handling for DELETE Requests
+### 🆕 Special Handling for DELETE Requests
+
+> **✨ New Feature**: `deleteWithBody` parameter makes DELETE requests more flexible!
 
 Fly.js provides special handling for DELETE requests. By default, it follows HTTP standards and sends data as query parameters:
 
@@ -555,14 +560,14 @@ Fly.js provides special handling for DELETE requests. By default, it follows HTT
 fly.delete('/api/user/123', {reason: 'spam'})
 // Generates: DELETE /api/user/123?reason=spam
 
-// Enable request body: Set deleteWithBody: true
+// 🆕 New Feature: Enable request body, set deleteWithBody: true
 fly.delete('/api/user/123', {reason: 'spam'}, {deleteWithBody: true})
 // Generates: DELETE /api/user/123 with body: {"reason": "spam"}
 ```
 
 **Parameter Description:**
 - `deleteWithBody: false` (default): DELETE requests use query parameters, data is added to the URL
-- `deleteWithBody: true`: DELETE requests use request body, data is sent as JSON
+- `deleteWithBody: true` (🆕 New Feature): DELETE requests use request body, data is sent as JSON
 
 **Usage Recommendations:**
 - Recommended to use default behavior (query parameters) for better HTTP standard compliance and compatibility
