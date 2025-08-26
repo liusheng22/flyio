@@ -1,4 +1,4 @@
-[![fly.js](https://github.com/liusheng22/flyio/raw/master/fly.png)](https://wendux.github.io/dist/#/doc/flyio/readme)
+[![fly.js](https://github.com/liusheng22/flyio/raw/main/fly.png)](https://wendux.github.io/dist/#/doc/flyio/readme)
 
 [![npm version](https://img.shields.io/npm/v/flyio.js.svg)](https://www.npmjs.org/package/flyio.js)
 [![size](https://img.shields.io/github/size/liusheng22/flyio/dist/fly.min.js.svg)](https://unpkg.com/flyio.js@1.0.0/dist/fly.min.js)
@@ -8,7 +8,7 @@
 
 Supporting request forwarding and Promise based HTTP client for all JavaScript runtimes.
 
-Chinese documentation : [中文文档](https://github.com/liusheng22/flyio/blob/master/README.md)
+Chinese documentation : [中文文档](https://github.com/liusheng22/flyio/blob/main/README.md)
 
 
 
@@ -24,27 +24,27 @@ Chinese documentation : [中文文档](https://github.com/liusheng22/flyio/blob/
     <tr>
         <td align="center" valign="middle">
             <a href="https://nodejs.org/">
-                <img  src="https://github.com/liusheng22/flyio/raw/master/imgs/node.png" alt="node logo">
+                <img  src="https://github.com/liusheng22/flyio/raw/main/imgs/node.png" alt="node logo">
             </a>
         </td>
         <td align="center" valign="middle">
             <a href="https://mp.weixin.qq.com/">
-                <img  src="https://github.com/liusheng22/flyio/raw/master/imgs/mp.png" alt="Mini Program logo">
+                <img  src="https://github.com/liusheng22/flyio/raw/main/imgs/mp.png" alt="Mini Program logo">
             </a>
         </td>
         <td align="center" valign="middle">
             <a href="http://facebook.github.io/react-native/">
-                <img  src="https://github.com/liusheng22/flyio/raw/master/imgs/rn.png" alt="mpvue logo">
+                <img  src="https://github.com/liusheng22/flyio/raw/main/imgs/rn.png" alt="mpvue logo">
             </a>
         </td>
         <td align="center" valign="middle">
             <a href="http://weex.apache.org/">
-                <img  src="https://github.com/liusheng22/flyio/raw/master/imgs/weex.png" alt="weex logo">
+                <img  src="https://github.com/liusheng22/flyio/raw/main/imgs/weex.png" alt="weex logo">
             </a>
         </td>
         <td align="center" valign="middle">
             <a href="https://www.quickapp.cn/">
-                <img  src="https://github.com/liusheng22/flyio/raw/master/imgs/hp.png" alt="quick app logo">
+                <img  src="https://github.com/liusheng22/flyio/raw/main/imgs/hp.png" alt="quick app logo">
             </a>
         </td>
     </tr>
@@ -130,7 +130,7 @@ but the entries of  Browsers, Node, and React Native are the same。each require
    var fly=new Fly
    ```
 
-   If your  project does not use NPM to manage dependencies, you can download the source code directly to your project 。The download links are [wx.js](https://github.com/liusheng22/flyio/tree/master/dist/npm/wx.js) or  [wx.umd.min.js](https://github.com/liusheng22/flyio/tree/master/dist/umd/wx.umd.min.js)  . Download any one, save it to your project directory (assuming named "lib") , and then requiring:
+   If your  project does not use NPM to manage dependencies, you can download the source code directly to your project 。The download links are [wx.js](https://github.com/liusheng22/flyio/tree/main/dist/npm/wx.js) or  [wx.umd.min.js](https://github.com/liusheng22/flyio/tree/main/dist/umd/wx.umd.min.js)  . Download any one, save it to your project directory (assuming named "lib") , and then requiring:
 
    ```javascript
    var Fly=require("../lib/wx") 
