@@ -1,7 +1,7 @@
-[![fly.js](https://github.com/liusheng22/flyio/raw/main/fly.png)](https://wendux.github.io/dist/#/doc/flyio/readme)
+[![fly.js](https://github.com/liusheng22/flyio/raw/main/fly.png)](https://flyio-js.vercel.app/doc/flyio/readme)
 
 [![npm version](https://img.shields.io/npm/v/flyio.js.svg)](https://www.npmjs.org/package/flyio.js)
-[![size](https://img.shields.io/github/size/liusheng22/flyio/dist/fly.min.js.svg)](https://unpkg.com/flyio.js@1.0.0/dist/fly.min.js)
+[![size](https://img.shields.io/github/size/liusheng22/flyio/dist/fly.min.js.svg)](https://unpkg.com/flyio.js@1.0.1/dist/fly.min.js)
 ![platform](https://img.shields.io/badge/platforms-All%20JavaScript%20Runtimes-blue.svg)
 
 ## Flyio.js
@@ -12,6 +12,21 @@ Supporting request forwarding and Promise based HTTP client for all JavaScript r
 > **🚀 DELETE Request**: New `deleteWithBody` parameter support for more flexible DELETE requests! [View Details](#special-handling-for-delete-requests)
 
 Chinese documentation : [中文文档](https://github.com/liusheng22/flyio/blob/main/README.md)
+
+### 🚀 Project Background
+
+Due to the original Fly.js author's long-term lack of updates and important limitations in the Mini Program environment: **DELETE requests cannot pass body parameters, and all parameters are forcibly converted to query parameters**. This issue has been repeatedly reported in the community (such as [GitHub Issue #238](https://github.com/wendux/fly/issues/238)), seriously affecting the Mini Program development experience.
+
+We forked the original project and optimized it, mainly fixing the following issues:
+
+- ✅ **Fixed Mini Program DELETE Request Limitations**: The original fly.js completely does not support passing body data in DELETE requests in the Mini Program environment
+- ✅ **Enhanced Parameter Passing Flexibility**: Supports passing both query parameters and body parameters simultaneously
+- ✅ **Improved Security**: Sensitive information is no longer exposed in URLs
+- ✅ **Maintained Backward Compatibility**: In scenarios where body parameters are not needed, the behavior is completely consistent with the original fly.js
+
+### 📖 Detailed Documentation
+
+For more technical details and usage methods, please check: [DELETE Request Problem Solution](https://flyio-js.vercel.app/doc/flyio/delete-with-body)
 
 
 
@@ -78,9 +93,9 @@ Fly.is  locates to be the ultimate solution for Javascript http requests. That i
 
 ## Documentation
 
-You can find the Fly documentation [on the offical website](https://wendux.github.io/dist/#/language).
+You can find the Fly documentation [on the official website](https://flyio-js.vercel.app).
 
-[中文文档](https://wendux.github.io/dist/#/doc/flyio/readme)
+[中文文档](https://flyio-js.vercel.app/doc/flyio/readme)
 
 ## Installing
 
@@ -406,7 +421,7 @@ fly.interceptors.request.use(function (request) {
 1. The current fly instance will be locked  when call `fly.lock()` . Once  the fly instance is locked,  the incomming request task maked by it will be hang up and enter a queue before they enter the request interceptors, you can call `fly.unlock()` to continue the requests or call `fly.clear()` to cancel the requests in the queue.
 2. **Only when you return the `request` object  passed by interceptor at the final , the origin http request  will be continued**.  
 
-And you can also make an async task in the **response** interceptor. More information about interceptors and examples refer to [flyio interceptor](https://wendux.github.io/dist/#/doc/flyio/interceptor).
+And you can also make an async task in the **response** interceptor. More information about interceptors and examples refer to [flyio interceptor](https://flyio-js.vercel.app/doc/flyio/interceptor).
 
 ## Error handling
 
@@ -490,7 +505,7 @@ fly.config.headers={xx:5,bb:6,dd:7}
 // Set timeout
 fly.config.timeout=10000;
 // Set base url
-fly.config.baseURL="https://wendux.github.io/"
+fly.config.baseURL="https://flyio-js.vercel.app/"
 // Common URL params
 fly.config.params={"token":"testtoken"}
 ```
@@ -561,8 +576,24 @@ fly.delete('/api/user/123', {reason: 'spam'})
 // Generates: DELETE /api/user/123?reason=spam
 
 // 🆕 New Feature: Enable request body, set deleteWithBody: true
-fly.delete('/api/user/123', {reason: 'spam'}, {deleteWithBody: true})
+fly.delete('/api/user/123', 
+  { reason: 'spam' }, 
+  {
+    deleteWithBody: true
+  }
+)
 // Generates: DELETE /api/user/123 with body: {"reason": "spam"}
+```
+
+### 🆕 More Parameter Usage Examples for `fly.delete`
+```javascript
+// Pass both query & body parameters simultaneously
+
+fly.delete('/api/user', null, {
+  params: { key: 'params-value' }, // Support query parameters
+  body: { key: 'body-value' }, // Support body parameters
+  deleteWithBody: true // Allow DELETE requests to pass body parameters
+})
 ```
 
 **Parameter Description:**
@@ -662,15 +693,15 @@ nFly.interceptors.request.use(...)
 
 ## Http Engine
 
-Fly introduces the concept of Http Engine, and Http Engine is the engine that really initiates http requests. This is typically XMLHttpRequest in browser environment, and in Node environments, any module or library that can initiate a network request can be implemented. Fly can switch the Http Engine freely. In fact, Fly is implemented by switching Http Engine, supporting both the browser environment and the Node environment.However, Http Engine is not limited to Node and browser environment, also can be Android, IOS, electron and so on, it is because of these, Fly has a very unique and powerful feature "request forwarding". Based on the request forwarding, we can implement some useful functions, such as redirecting all the HTTP requests of the hybrid application to Native, and then complete the network request on natvie side.  The benefit of this is that  we can perform unified certificate validation, cookie management, access control and son on on natvie.  More details click here  [http engine](https://wendux.github.io/dist/#/doc/flyio-en/engine) .
+Fly introduces the concept of Http Engine, and Http Engine is the engine that really initiates http requests. This is typically XMLHttpRequest in browser environment, and in Node environments, any module or library that can initiate a network request can be implemented. Fly can switch the Http Engine freely. In fact, Fly is implemented by switching Http Engine, supporting both the browser environment and the Node environment.However, Http Engine is not limited to Node and browser environment, also can be Android, IOS, electron and so on, it is because of these, Fly has a very unique and powerful feature "request forwarding". Based on the request forwarding, we can implement some useful functions, such as redirecting all the HTTP requests of the hybrid application to Native, and then complete the network request on natvie side.  The benefit of this is that  we can perform unified certificate validation, cookie management, access control and son on on natvie.  More details click here  [http engine](https://flyio-js.vercel.app/doc/flyio-en/engine) .
 
 ## Global Ajax interception
 
-In browsers, you can intercept global Ajax requests by replacing XMLHttpRequest with Fly engine, regardless of what network library the upper layer uses.  More details click here [Ajax hook](https://wendux.github.io/dist/#/doc/flyio-en/hook)
+In browsers, you can intercept global Ajax requests by replacing XMLHttpRequest with Fly engine, regardless of what network library the upper layer uses.  More details click here [Ajax hook](https://flyio-js.vercel.app/doc/flyio-en/hook)
 
 ## Using in Node
 
-Whether in browser environment or in Node environment, Fly provides a unified Promise API in the upper layer. This means that, regardless of whether you are in web development or node development, you can perform HTTP requests in the same way. However, because of the difference of node and browser environment, under the environment of Node, Fly in addition to basic API support, also provides some enhancements to the API, the API mainly involves the file download, file upload,  HTTP agents and other powerful features, please refer to [Node enhanced API](https://wendux.github.io/dist/#/doc/flyio-en/node) .
+Whether in browser environment or in Node environment, Fly provides a unified Promise API in the upper layer. This means that, regardless of whether you are in web development or node development, you can perform HTTP requests in the same way. However, because of the difference of node and browser environment, under the environment of Node, Fly in addition to basic API support, also provides some enhancements to the API, the API mainly involves the file download, file upload,  HTTP agents and other powerful features, please refer to [Node enhanced API](https://flyio-js.vercel.app/doc/flyio-en/node) .
 
 
 ## Size
@@ -679,7 +710,7 @@ In  browser environment, the size of a library is very important. In this regard
 
 ## Project structure
 
-Learn the project structure of Fly.js please refer to : [Fly.js source structure](https://wendux.github.io/dist/#/doc/flyio-en/files) 
+Learn the project structure of Fly.js please refer to : [Fly.js source structure](https://flyio-js.vercel.app/doc/flyio-en/files) 
 
 
 ## Acknowledgments

@@ -8,6 +8,8 @@ export interface FlyRequestConfig extends Object {
     withCredentials?: boolean;
     parseJson?: boolean;
     responseType?: string;
+    params?: any;
+    deleteWithBody?: boolean; // 🆕 New Feature: Allow DELETE requests to use request body instead of query parameters
 }
 
 export interface FlyError {
@@ -59,7 +61,7 @@ export interface Fly {
     engine:any;
     request<T = any>(url: string, data?: any, config?: FlyRequestConfig): FlyPromise<T>;
     get<T = any>(url: string, data?:any, config?: FlyRequestConfig): FlyPromise<T>;
-    delete(url: string, data?:any, config?: FlyRequestConfig): FlyPromise;
+    delete<T = any>(url: string, data?:any, config?: FlyRequestConfig): FlyPromise<T>;
     head(url: string,data?:any, config?: FlyRequestConfig): FlyPromise;
     post<T = any>(url: string, data?: any, config?: FlyRequestConfig): FlyPromise<T>;
     put<T = any>(url: string, data?: any, config?: FlyRequestConfig): FlyPromise<T>;

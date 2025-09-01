@@ -1,18 +1,37 @@
 [English](https://github.com/liusheng22/flyio/blob/main/README-EN.md)|中文简体
 
-[![fly.js](https://github.com/liusheng22/flyio/raw/main/fly.png)](https://wendux.github.io/dist/#/doc/flyio/readme)
+[![fly.js](https://github.com/liusheng22/flyio/raw/main/fly.png)](https://flyio-js.vercel.app)
 
 [![npm version](https://img.shields.io/npm/v/flyio.js.svg)](https://www.npmjs.org/package/flyio.js)
-[![size](https://img.shields.io/github/size/liusheng22/flyio/dist/fly.min.js.svg)](https://unpkg.com/flyio.js@1.0.0/dist/fly.min.js)
+[![size](https://img.shields.io/github/size/liusheng22/flyio/dist/fly.min.js.svg)](https://unpkg.com/flyio.js@1.0.1/dist/fly.min.js)
 ![platform](https://img.shields.io/badge/platforms-All%20JavaScript%20Runtimes-blue.svg)
 
 ## Flyio.js
 
-一个支持所有JavaScript运行环境的基于Promise的、支持请求转发、强大的http请求库。可以让您在多个端上(Node.js、浏览器、小程序等)尽可能大限度的实现代码复用。
+`Flyio.js` Fork 自 [Fly.js](https://github.com/wendux/fly)，一个支持所有JavaScript运行环境的基于Promise的、支持请求转发、强大的http请求库。可以让您在多个端上(Node.js、浏览器、小程序等)尽可能大限度的实现代码复用。
 
 
-### ✨ 新特性
-> **🚀 DELETE请求**: 新增 `deleteWithBody` 参数支持，让 DELETE 请求更加灵活！[查看详情](#delete-请求的特殊处理)
+### 🚀 项目背景
+
+> 由于原 `Fly.js` 作者长期不更新，且在小程序环境中存在重要限制：
+
+**DELETE 请求无法传入 body 参数，所有参数都会被强制转换为 query 参数**。这个问题在社区中已被多次反馈（如 [GitHub Issue #238](https://github.com/wendux/fly/issues/238)），严重影响了小程序开发体验。
+
+我们 Fork 原项目并进行优化，主要修复了以下问题：
+
+- ✅ **修复小程序 DELETE 请求限制**：原 `fly.js` 在小程序环境下完全不支持 DELETE 请求传递 body 数据
+- ✅ **增强参数传递灵活性**：支持同时传递 query 参数和 body 参数
+- ✅ **提升安全性**：敏感信息不再暴露在 URL 中
+- ✅ **保持向后兼容**：在不需要 body 参数的场景下，行为与原 `fly.js` 完全一致
+
+### 📖 详细文档
+
+更多技术细节和使用方法，请查看：[DELETE 请求问题解决方案](https://flyio-js.vercel.app/doc/flyio/delete-with-body)
+### 📖 在线文档
+
+详细的文档请移步：[Flyio.js官网文档](https://flyio-js.vercel.app) 。 官网http请求使用的正是fly，为了方便大家验证fly功能特性，官网对fly进行了全局引入，您可以在官网页面打开控制台直接验证。
+
+[English Doc](https://flyio-js.vercel.app/doc/flyio-en/readme)
 
 
 ### 浏览器支持
@@ -78,19 +97,12 @@ Fly.js 是一个基于 promise 的，轻量且强大的Javascript http 网络库
 
 
 
-
-
 ## 定位与目标
 
 Fly 的定位是成为 Javascript http请求的终极解决方案。也就是说，在任何能够执行 Javascript 的环境，只要具有访问网络的能力，Fly都能运行在其上，提供统一的API。
 
 
 
-## 官网
-
-详细的文档请移步：[Flyio官网文档](https://wendux.github.io/dist/#/language) 。 官网http请求使用的正是fly，为了方便大家验证fly功能特性，官网对fly进行了全局引入，您可以在官网页面打开控制台直接验证。
-
-[English doc](https://wendux.github.io/dist/#/doc/flyio-en/readme)
 
 
 
@@ -114,7 +126,7 @@ UMD（浏览器中）
 https://unpkg.com/flyio.js/dist/umd/fly.umd.min.js
 ```
 
-## 引入flyio
+## 引入`flyio.js`
 
 **不同JavaScript运行时的入口文件不同** ，请查看文档后面相应平台的引入方式，但在浏览器、Node、React Native中引入的方式是一样的，下面是不同平台下的引入的方式：
 
@@ -303,7 +315,7 @@ formData.append('username', 'Chris');
 fly.post("../package.json",formData).then(log).catch(log)
 ```
 
-注：Fly目前只在支持 `FormData` 的浏览器环境中支持 `FormData`，Node环境下对  `FormData` 的支持方式稍有不同，详情戳这里 [Node 下增强的API ](https://wendux.github.io/dist/#/doc/flyio/node)
+注：Fly目前只在支持 `FormData` 的浏览器环境中支持 `FormData`，Node环境下对  `FormData` 的支持方式稍有不同，详情戳这里 [Node 下增强的API ](https://flyio-js.vercel.app/doc/flyio/node)
 
 ### 请求二进制数据
 
@@ -424,7 +436,7 @@ fly.interceptors.request.use(function (request) {
 1. 当前Fly实例会在调用`fly.lock`时会被锁定，fly实例锁定后，接下来的请求在进入请求拦截器前会进入一个队列排队，当解锁后(通过调用`fly.unlock`)，才会进入拦截器，这提供一种同步多个任务的方式。如果你想取消队列里的所有请求，可以调用`fly.clear()` 。
 2. 只有当最终返回`request`对象时(拦截器传递给你的回调参数)，请求才会继续（如代码中注释）， 否则将会把返回的值作为本次请求。
 
-有关拦截器的详细信息和示例，请参阅[flyio interceptor](https://wendux.github.io/dist/#/doc/flyio/interceptor)。
+有关拦截器的详细信息和示例，请参阅[flyio interceptor](https://flyio-js.vercel.app/doc/flyio/interceptor)。
 
 ## 错误处理
 
@@ -498,7 +510,7 @@ fly.config.headers={xx:5,bb:6,dd:7}
 //设置超时
 fly.config.timeout=10000;
 //设置请求基地址
-fly.config.baseURL="https://wendux.github.io/"
+fly.config.baseURL="https://flyio-js.vercel.app/"
 //设置公共的Get参数
 fly.config.params={"token":"testtoken"};
 ```
@@ -516,7 +528,7 @@ fly.request("/test",{hh:5},{
 
 **注：若单次配置和实例配置冲突，则会优先使用单次请求配置**
 
-详细的配置请参考 [Fly请求配置](https://wendux.github.io/dist/#/doc/flyio/config) 。
+详细的配置请参考 [Fly请求配置](https://flyio-js.vercel.app/doc/flyio/config) 。
 
 
 
@@ -573,8 +585,24 @@ fly.delete('/api/user/123', {reason: 'spam'})
 // 生成：DELETE /api/user/123?reason=spam
 
 // 🆕 新特性：启用请求体，设置 deleteWithBody: true
-fly.delete('/api/user/123', {reason: 'spam'}, {deleteWithBody: true})
+fly.delete('/api/user/123',
+  { reason: 'spam' },
+  {
+    deleteWithBody: true
+  }
+)
 // 生成：DELETE /api/user/123 with body: {"reason": "spam"}
+```
+
+### 🆕 `fly.delete` 更多参数用法
+```javascript
+// 同时传入 query & body 参数
+
+fly.delete('/api/user', null, {
+  params: { key: 'params-value' }, // 支持 query 参数
+  body: { key: 'body-value' }, // 支持 body 参数
+  deleteWithBody: true // 允许 DELETE 请求传递 body 参数
+})
 ```
 
 **参数说明：**
@@ -676,17 +704,17 @@ var nFly=new Fly();
 
 ## Http engine
 
-Fly 引入了Http engine 的概念，所谓 Http engine，就是真正发起http请求的引擎，这在浏览器中一般都是`XMLHttpRequest`，而在 node 环境中，可以用任何能发起网络请求的库／模块实现，Fly 可以自由更换底层 http engine ，Fly 正是通过更换 engine 而实现同时支持 node 和 browser 。值得注意的是，http engine 不局限于node 和 browser 环境中，也可以是 android、ios、electron，正是由于这些，Fly 才有了一个非常强大的功能——**请求重定向**。基于请求重定向，我们可以实现一些非常有用的功能，比如**将内嵌到 APP 的所有 http 请求重定向到 Native ，然后在端上( android、ios )统一发起网络请求、进行 cookie 管理、证书校验**。详情请戳 [Fly Http Engine ](https://wendux.github.io/dist/#/doc/flyio/engine)
+Fly 引入了Http engine 的概念，所谓 Http engine，就是真正发起http请求的引擎，这在浏览器中一般都是`XMLHttpRequest`，而在 node 环境中，可以用任何能发起网络请求的库／模块实现，Fly 可以自由更换底层 http engine ，Fly 正是通过更换 engine 而实现同时支持 node 和 browser 。值得注意的是，http engine 不局限于node 和 browser 环境中，也可以是 android、ios、electron，正是由于这些，Fly 才有了一个非常强大的功能——**请求重定向**。基于请求重定向，我们可以实现一些非常有用的功能，比如**将内嵌到 APP 的所有 http 请求重定向到 Native ，然后在端上( android、ios )统一发起网络请求、进行 cookie 管理、证书校验**。详情请戳 [Fly Http Engine ](https://flyio-js.vercel.app/doc/flyio/engine)
 
 
 
 ## 全局Ajax拦截
 
-在浏览器中，可以通过用 Fly  engine 替换 `XMLHttpRequest` 的方式拦截**全局**的的 Ajax 请求，无论上层使用的是何种网络库。详细的内容请参考 [Fly拦截全局Ajax](https://wendux.github.io/dist/#/doc/flyio/hook)
+在浏览器中，可以通过用 Fly  engine 替换 `XMLHttpRequest` 的方式拦截**全局**的的 Ajax 请求，无论上层使用的是何种网络库。详细的内容请参考 [Fly拦截全局Ajax](https://flyio-js.vercel.app/doc/flyio/hook)
 
 ## Node
 
-无论是在浏览器环境，还是在 Node 环境，Fly在上层提供了统一的 Promise API。这意味着无论您是 web 开发还是 node 开发，您都可以以相同的调用方式来发起http请求。不过，由于node和浏览器环境本身的差异，在Node环境下，Fly除了支持基本的API之外，还提供了一些增强的API，这些 API 主要涉及文件下载、多文件上传、http代理等众多强大的功能，详情请参考 [Node下增强的API](https://wendux.github.io/dist/#/doc/flyio/node)
+无论是在浏览器环境，还是在 Node 环境，Fly在上层提供了统一的 Promise API。这意味着无论您是 web 开发还是 node 开发，您都可以以相同的调用方式来发起http请求。不过，由于node和浏览器环境本身的差异，在Node环境下，Fly除了支持基本的API之外，还提供了一些增强的API，这些 API 主要涉及文件下载、多文件上传、http代理等众多强大的功能，详情请参考 [Node下增强的API](https://flyio-js.vercel.app/doc/flyio/node)
 
 ## 体积
 
@@ -694,7 +722,7 @@ Fly 引入了Http engine 的概念，所谓 Http engine，就是真正发起http
 
 ## 工程目录结构
 
-工程目录结构及文件说明请参照  [fly源码目录说明](https://wendux.github.io/dist/#/doc/flyio/files) 。
+工程目录结构及文件说明请参照  [fly源码目录说明](https://flyio-js.vercel.app/doc/flyio/files) 。
 
 ## 致谢 (Acknowledgments)
 
